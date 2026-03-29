@@ -1,0 +1,69 @@
+﻿@model IEnumerable<ShoppingCart.Models.CartItem>
+
+<h2>Giỏ hàng của bạn</h2>
+
+@if (Model.Count() == 0)
+{
+    <div class="text-center mt-5 mb-5">
+        <h4 class="text-secondary mb-3">Giỏ hàng của bạn trống, hãy quay về trang chủ để chọn hàng.</h4>
+        <a href="@Url.Action("Index", "Home")" class="btn btn-primary btn-lg">
+            🏠 Quay về trang chủ
+        </a>
+    </div>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tên sản phẩm</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+                <th>Tổng tiền</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.Price</td>
+                    <td>
+                        <form action="@Url.Action("UpdateAmount")" method="get">
+                            <input type="hidden" name="ProductId" value="@item.Id" />
+                            <input type="number" min="1" step="1" name="newAmount" value="@item.Amount" />
+                            <button type="submit" class="btn btn-primary btn-sm">Cập nhật</button>
+                        </form>
+                    </td>
+                    <td>@item.Money.ToString("#,##0").Replace(',', '.') VNĐ</td>
+                    <td>
+                        <a href="@Url.Action("RemoveItem", "ShoppingCart", new { id = item.Id })"
+                           onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này?');" class="btn btn-danger btn-sm">Xóa</a>
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td colspan="4" class="text-right">Tổng số lượng:</td>
+                <td>@Model.Sum(m => m.Amount)</td>
+                <td class="text-right">Tổng thành tiền:</td>
+                <td>@Model.Sum(m => m.Money).ToString("#,##0").Replace(',', '.') VNĐ</td>
+            </tr>
+            @* <div class="text-right mt-3"> *@
+            @*     <a href="@Url.Action("Checkout", "ShoppingCart")" *@
+            @*        class="btn btn-success btn-lg"> *@
+            @*         Thanh toán *@
+            @*     </a> *@
+            @* </div> *@
+                
+        </tbody>
+    </table>
+}
+<div class="text-right mt-3">
+    <a href="@Url.Action("Checkout", "ShoppingCart")"
+       class="btn btn-success btn-lg">
+        Thanh toán
+    </a>
+</div>

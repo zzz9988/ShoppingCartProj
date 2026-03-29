@@ -1,0 +1,120 @@
+﻿@model IEnumerable<ShoppingCart.Models.Product>
+
+@{
+    ViewData["Title"] = "Cửa hàng";
+}
+
+<div class="container pb-5">
+    <div class="d-flex mb-4 gap-2 flex-wrap">
+        <a href="#" class="magi-filter-pill active" data-filter="all">Tất cả</a>
+        <a href="#" class="magi-filter-pill" data-filter="quanao">Quần áo</a>
+        <a href="#" class="magi-filter-pill" data-filter="phukien">Phụ kiện</a>
+        <a href="#" class="magi-filter-pill" data-filter="khac">Khác</a>
+    </div>
+
+    <p class="mb-4 text-muted fw-bold">
+        <span id="current-filter-name">Tất cả</span> — <span class="text-warning" id="product-count">@Model.Count() sản phẩm</span>
+    </p>
+
+    <div class="row" id="product-list">
+        @foreach (var product in Model)
+        {
+            string categoryClass = "khac";
+            string nameLower = product.Name.ToLower();
+
+            if (nameLower.Contains("áo") || nameLower.Contains("quần") || nameLower.Contains("váy"))
+            {
+                categoryClass = "quanao";
+            }
+            else if (nameLower.Contains("thắt lưng") || nameLower.Contains("mũ"))
+            {
+                categoryClass = "phukien";
+            }
+            else if (nameLower.Contains("balo"))
+            {
+                categoryClass = "khac";
+            }
+
+            <div class="col-md-3 col-sm-6 product-item @categoryClass">
+                <div class="card mb-4 magi-card position-relative">
+                    <img src="~/Content/Images/@product.Photo" class="card-img-top p-2 rounded-4" style="height: 250px; object-fit: cover;" />
+
+                    <div class="card-body">
+                        <p class="text-muted small mb-1 text-uppercase">
+                            @(categoryClass == "quanao" ? "Quần áo" : categoryClass == "phukien" ? "Phụ kiện" : "Khác")
+                        </p>
+                        <h6 class="card-title fw-bold mb-3" style="min-height: 40px;">@product.Name</h6>
+
+                        <div class="magi-price">
+                            ₫@product.Price.ToString("#,##0")
+                        </div>
+
+                        <div class="d-flex justify-content-between gap-2 mt-2">
+                            <button class="btn btn-outline-orange btn-add-cart flex-shrink-1 px-3" data-id="@product.Id">
+                                + Giỏ
+                            </button>
+
+                            <a class="btn btn-orange flex-grow-1" href="@Url.Action("AddToCart", "ShoppingCart", new { id = product.Id })">
+                                Mua ngay
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".btn-add-cart").click(function (e) {
+                e.preventDefault();
+                var productId = $(this).data("id");
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("AddToCartAjax", "ShoppingCart")',
+                    data: { id: productId },
+                    success: function (response) {
+                        if (response.success) {
+                            alert(response.message);
+                        }
+                    },
+                    error: function () {
+                        alert("Có lỗi xảy ra khi thêm vào giỏ hàng.");
+                    }
+                });
+            });
+
+
+            $(".magi-filter-pill").click(function(e) {
+                e.preventDefault(); 
+
+  
+                $(".magi-filter-pill").removeClass("active");
+                $(this).addClass("active");
+
+     
+                var filterValue = $(this).data("filter");
+                var filterName = $(this).text();
+
+
+                var visibleCount = 0;
+                if (filterValue === "all") {
+                    $(".product-item").fadeIn(300);
+                    visibleCount = $(".product-item").length;
+                } else {
+                    $(".product-item").hide();
+                    $("." + filterValue).fadeIn(300);
+                    visibleCount = $("." + filterValue).length;
+                }
+
+
+                $("#current-filter-name").text(filterName);
+                $("#product-count").text(visibleCount + " sản phẩm");
+            });
+        });
+    </script>
+}

@@ -1,0 +1,113 @@
+﻿html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+/* --- GIAO DIỆN THEME MAGISTORE --- */
+:root {
+    --magi-orange: #ff6b00;
+    --magi-orange-hover: #e56000;
+    --magi-bg: #fdfcf0; /* Màu nền kem nhạt */
+}
+
+body {
+    background-color: var(--magi-bg);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Thanh điều hướng */
+.magi-navbar {
+    background-color: white !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.magi-brand {
+    color: var(--magi-orange) !important;
+    font-size: 1.5rem;
+}
+
+/* Nút Cam đặc trưng */
+.btn-orange {
+    background-color: var(--magi-orange);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+    .btn-orange:hover {
+        background-color: var(--magi-orange-hover);
+        color: white;
+    }
+
+/* Nút viền xám, chữ cam (+ Giỏ) */
+.btn-outline-orange {
+    background-color: white;
+    color: var(--magi-orange);
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+    .btn-outline-orange:hover {
+        border-color: var(--magi-orange);
+        color: var(--magi-orange);
+        background-color: #fff9f5;
+    }
+
+/* Thẻ sản phẩm (Card) */
+.magi-card {
+    border: none;
+    border-radius: 16px; /* Bo góc tròn nhiều hơn */
+    overflow: hidden;
+    background-color: white;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .magi-card:hover {
+        transform: translateY(-5px); /* Hiệu ứng nảy lên khi di chuột */
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+
+.magi-price {
+    color: var(--magi-orange);
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+/* Menu lọc giả lập */
+.magi-filter-pill {
+    background-color: white;
+    border: 1px solid #eee;
+    border-radius: 20px;
+    padding: 8px 20px;
+    color: #333;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+    .magi-filter-pill.active, .magi-filter-pill:hover {
+        background-color: var(--magi-orange);
+        color: white;
+        border-color: var(--magi-orange);
+    }

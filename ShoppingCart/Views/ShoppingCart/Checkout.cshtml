@@ -1,0 +1,67 @@
+﻿@model IEnumerable<ShoppingCart.Models.CartItem>
+
+<div class="container mt-4">
+    <h2>Xác nhận thanh toán</h2>
+
+    <div class="row">
+        <div class="col-md-7">
+            <table class="table table-bordered">
+                <thead class="bg-light">
+                    <tr>
+                        <th>Tên sản phẩm</th>
+                        <th>Giá</th>
+                        <th>Số lượng</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.Price.ToString("#,##0") VNĐ</td>
+                            <td>@item.Amount</td>
+                            <td>@item.Money.ToString("#,##0") VNĐ</td>
+                        </tr>
+                    }
+                    <tr class="table-warning">
+                        <td colspan="3" class="text-right"><strong>Tổng tiền thanh toán:</strong></td>
+                        <td><strong>@Model.Sum(m => m.Money).ToString("#,##0") VNĐ</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-md-5">
+            <div class="card p-4 shadow-sm">
+                <h4>Thông tin giao hàng</h4>
+                <hr />
+                <form action="@Url.Action("ProcessPayment", "ShoppingCart")" method="post">
+                    <div class="form-group mb-3">
+                        <label>Họ tên khách hàng:</label>
+                        <input type="text" name="CustomerName" class="form-control" placeholder="Nhập tên của bạn" required />
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label>Số điện thoại:</label>
+                        <input type="tel" name="Phone" class="form-control" placeholder="Nhập SĐT" required />
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label>Địa chỉ nhận hàng:</label>
+                        <textarea name="Address" class="form-control" rows="3" placeholder="Địa chỉ chi tiết" required></textarea>
+                    </div>
+
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-success btn-block w-100 mb-2">
+                            ✅ Xác nhận đặt hàng
+                        </button>
+                        <a href="@Url.Action("Index", "ShoppingCart")" class="btn btn-outline-secondary btn-block w-100">
+                            Quay lại giỏ hàng
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
