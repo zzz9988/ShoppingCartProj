@@ -1,6 +1,6 @@
 # ShoppingCartProj
-Early e-commerce website project, uses ASP.NET Core MVC, Entity Framework Core, and SQL Server. Supports shopping cart and product filtering using AJAX.
-MagiStore - E-Commerce Shopping Cart Project
+This is a student assignment project, uses ASP.NET Core MVC, Entity Framework Core, and SQL Server. Supports shopping cart and product filtering using AJAX.
+E-Commerce Shopping Cart Project
 This project demonstrates a complete shopping flow from product browsing to session-based cart management and database-driven order processing.
 
 🚀 Features
